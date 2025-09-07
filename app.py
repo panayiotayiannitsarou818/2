@@ -124,7 +124,7 @@ def _inject_floating_logo(width_px=96):
         mime = "image/png" if path.lower().endswith(".png") else "image/jpeg"
     except Exception:
         return
-    import streamlit as st as _st  # ensure local alias
+    import streamlit as _st  # ensure local alias
     _st.markdown(f"""
 <style>
 #floating-logo {{
