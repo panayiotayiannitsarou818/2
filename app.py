@@ -36,6 +36,43 @@ def _get_logo_bytes():
             return None
     return None
 
+
+
+def _inject_floating_logo(width_px=96):
+    """Render a floating logo at bottom-right that stays on screen while scrolling."""
+    # Get bytes from file or embedded
+    data = _get_logo_bytes()
+    if not data:
+        return
+    b64 = base64.b64encode(data).decode('utf-8')
+    mime = LOGO_MIME
+
+    import streamlit as st
+    st.markdown(f"""
+<style>
+#floating-logo {{
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  z-index: 9999;
+  opacity: 0.95;
+  pointer-events: none;  /* don't block clicks */
+}}
+#floating-logo img {{
+  width: {width_px}px;
+  height: auto;
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,0.25));
+}}
+@media (max-width: 768px) {{
+  #floating-logo img {{ width: {max(72, int(0.85*width_px))}px; }}
+  #floating-logo {{ right: 12px; bottom: 12px; }}
+}}
+</style>
+<div id="floating-logo">
+  <img src="data:{mime};base64,{b64}" alt="logo" />
+</div>
+""", unsafe_allow_html=True)
+
 from PIL import Image
 
 
@@ -159,40 +196,7 @@ if not (_auth and _terms):
 
 
 
-def _inject_floating_logo(width_px=96):
-    """Render a floating logo at bottom-right that stays on screen while scrolling."""
-    # Get bytes from file or embedded
-    data = _get_logo_bytes()
-    if not data:
-        return
-    b64 = base64.b64encode(data).decode('utf-8')
-    mime = LOGO_MIME
 
-    import streamlit as st
-    st.markdown(f"""
-<style>
-#floating-logo {{
-  position: fixed;
-  right: 16px;
-  bottom: 16px;
-  z-index: 9999;
-  opacity: 0.95;
-  pointer-events: none;  /* don't block clicks */
-}}
-#floating-logo img {{
-  width: {width_px}px;
-  height: auto;
-  filter: drop-shadow(0 1px 2px rgba(0,0,0,0.25));
-}}
-@media (max-width: 768px) {{
-  #floating-logo img {{ width: {max(72, int(0.85*width_px))}px; }}
-  #floating-logo {{ right: 12px; bottom: 12px; }}
-}}
-</style>
-<div id="floating-logo">
-  <img src="data:{mime};base64,{b64}" alt="logo" />
-</div>
-""", unsafe_allow_html=True)
 
 def _load_module(name: str, file_path: Path):
     spec = importlib.util.spec_from_file_location(name, str(file_path))
