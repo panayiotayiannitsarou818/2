@@ -186,7 +186,7 @@ st.set_page_config(page_title="Ψηφιακή Κατανομή Μαθητών Α
 
 # --- Κεφαλίδα σελίδας ---
 st.title("Ψηφιακή Κατανομή Μαθητών Α' Δημοτικού")
-st.caption(""Για μια παιδεία που βλέπει το φώς σε όλα τα παιδιά"")
+st.caption("Για μια παιδεία που βλέπει το φώς σε όλα τα παιδιά")
 
 
 # Show floating logo only on the initial screen (before auth + terms)
