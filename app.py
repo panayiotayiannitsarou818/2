@@ -202,11 +202,11 @@ try:
 except Exception:
     _logo_inline_b64 = ""
 st.markdown(f"""
-<div style="display:flex; align-items:center; gap:8px; opacity:0.8;">
-  <img src="data:image/png;base64,{_logo_inline_b64}" alt="lotus" style="width:18px; height:auto; filter:hue-rotate(300deg) saturate(85%) brightness(112%); margin-top:-2px;" />
+<div style="display:flex; align-items:center; gap:8px; opacity:0.85;">
   <span>«Για μια παιδεία που βλέπει το φώς σε όλα τα παιδιά»</span>
+  <img src="data:image/png;base64,{_logo_inline_b64}" alt="lotus" style="width:18px; height:auto; margin-top:-2px; filter:hue-rotate(300deg) saturate(85%) brightness(112%);" />
 </div>
-""", unsafe_allow_html=True)
+""" , unsafe_allow_html=True)
 
 
 
