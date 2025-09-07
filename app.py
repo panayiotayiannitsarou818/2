@@ -39,7 +39,7 @@ def _get_logo_bytes():
 
 
 def _inject_floating_logo(width_px=77):
-    """Render a floating logo at bottom-left that stays on screen while scrolling."""
+    """Render a floating logo at bottom-right that stays on screen while scrolling."""
     # Get bytes from file or embedded
     data = _get_logo_bytes()
     if not data:
@@ -52,7 +52,7 @@ def _inject_floating_logo(width_px=77):
 <style>
 #floating-logo {{
   position: fixed;
-  left: 16px;
+  left: 285px;
   bottom: 16px;
   z-index: 9999;
   opacity: 0.95;
@@ -66,7 +66,7 @@ def _inject_floating_logo(width_px=77):
 }}
 @media (max-width: 768px) {{
   #floating-logo img {{ width: {max(72, int(0.85*width_px))}px; }}
-  #floating-logo {{ left: 12px; bottom: 12px; }}
+  #floating-logo {{ left: 285px; bottom: 12px; }}
 }}
 </style>
 <div id="floating-logo">
@@ -186,7 +186,7 @@ st.set_page_config(page_title="Ψηφιακή Κατανομή Μαθητών Α
 
 # --- Κεφαλίδα σελίδας ---
 st.title("Ψηφιακή Κατανομή Μαθητών Α' Δημοτικού")
-st.caption("Για μια παιδεία που βλέπει το φώς σε όλα τα παιδιά")
+st.caption("«Για μια παιδεία που βλέπει το φώς σε όλα τα παιδιά»")
 
 
 # Show floating logo only on the initial screen (before auth + terms)
