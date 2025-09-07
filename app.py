@@ -146,6 +146,17 @@ if _logo_bytes:
         _logo_img = None
 st.set_page_config(page_title="Ψηφιακή Κατανομή Μαθητών Α' Δημοτικού", page_icon=_logo_img if _logo_img else "🧩", layout="wide")
 
+# Show floating logo only on the initial screen (before auth + terms)
+try:
+    _auth = bool(st.session_state.get("auth_ok", False))
+    _terms = bool(st.session_state.get("accepted_terms", False))
+except Exception:
+    _auth, _terms = (False, False)
+if not (_auth and _terms):
+    _inject_floating_logo(width_px=96)
+
+
+
 
 
 def _inject_floating_logo(width_px=96):
