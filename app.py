@@ -38,9 +38,16 @@ def _get_logo_bytes():
 
 
 
-def _inject_floating_logo(width_px=77):
+def _inject_floating_logo(width_px=62):
     """Render a floating logo at bottom-right that stays on screen while scrolling."""
-    # Get bytes from file or embedded
+    
+    # Extra guard: if already authenticated and terms accepted, don't render
+    try:
+        if st.session_state.get("auth_ok") and st.session_state.get("accepted_terms"):
+            return
+    except Exception:
+        pass
+# Get bytes from file or embedded
     data = _get_logo_bytes()
     if not data:
         return
@@ -61,7 +68,7 @@ def _inject_floating_logo(width_px=77):
 #floating-logo img {{
   width: {width_px}px;
   height: auto;
-  filter: hue-rotate(265deg) saturate(80%) brightness(110%) drop-shadow(0 1px 2px rgba(0,0,0,0.20));
+  filter: hue-rotate(300deg) saturate(85%) brightness(112%) drop-shadow(0 1px 2px rgba(0,0,0,0.20));
   opacity: 0.92;
 }}
 @media (max-width: 768px) {{
@@ -186,7 +193,21 @@ st.set_page_config(page_title="Ψηφιακή Κατανομή Μαθητών Α
 
 # --- Κεφαλίδα σελίδας ---
 st.title("Ψηφιακή Κατανομή Μαθητών Α' Δημοτικού")
-st.caption("«Για μια παιδεία που βλέπει το φώς σε όλα τα παιδιά»")
+
+# --- Υπότιτλος με εικονίδιο λωτού ---
+try:
+    import base64
+    _logo_inline_bytes = _get_logo_bytes()
+    _logo_inline_b64 = base64.b64encode(_logo_inline_bytes).decode("ascii") if _logo_inline_bytes else ""
+except Exception:
+    _logo_inline_b64 = ""
+st.markdown(f"""
+<div style="display:flex; align-items:center; gap:8px; opacity:0.8;">
+  <img src="data:image/png;base64,{_logo_inline_b64}" alt="lotus" style="width:18px; height:auto; filter:hue-rotate(300deg) saturate(85%) brightness(112%); margin-top:-2px;" />
+  <span>«Για μια παιδεία που βλέπει το φώς σε όλα τα παιδιά»</span>
+</div>
+""", unsafe_allow_html=True)
+
 
 
 # Show floating logo only on the initial screen (before auth + terms)
@@ -196,7 +217,7 @@ try:
 except Exception:
     _auth, _terms = (False, False)
 if not (_auth and _terms):
-    _inject_floating_logo(width_px=77)
+    _inject_floating_logo(width_px=62)
 
 
 
