@@ -4,6 +4,10 @@ import re, os, json, importlib.util, datetime as dt, math, base64, unicodedata
 from pathlib import Path
 from io import BytesIO
 
+# Project root directory
+ROOT = Path(__file__).parent.resolve()
+
+
 import streamlit as st
 import pandas as pd
 from PIL import Image
